@@ -15,7 +15,7 @@ const PORT = parseInt(process.env.PORT) || 8000;
 
 app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname, '/public')));
-app.use(express.json());
+app.use(express.urlencoded({extended: true}));
 
 // Authentication Route
 app.get("/signup", signupViewController);
