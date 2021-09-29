@@ -11,6 +11,7 @@ connectToDatabase();
 const {signupViewController, signupController} = require("./controller/signupController");
 const {loginViewController, loginController, logoutController} = require("./controller/loginController")
 const {homeController} = require("./controller/viewsController");
+const {adminLoginView, adminLoginController, adminDashboardView, adminLogoutController} = require("./controller/adminController");
 
 const app = express();
 const PORT = parseInt(process.env.PORT) || 8000;
@@ -29,6 +30,13 @@ app.post("/signup", signupController);
 app.get('/login', loginViewController);
 app.post("/login", loginController);
 app.get("/logout", logoutController);
+
+
+//admin
+app.get('/admin', adminLoginView);
+app.post("/admin", adminLoginController);
+app.get("/admin/dashboard", adminDashboardView);
+app.get("/admin/logout", adminLogoutController);
 
 app.listen(PORT, () => {
     console.log("Express listening on port " + PORT);

@@ -13,16 +13,16 @@
         <h1>Bmazon</h1>
         <nav>
             <script>
-            const auth = document.cookie?.split(';')[1]?.split("-")[1];
-            if(auth === "true"){
-                document.write(`<a  href="/cart">Cart</a>`);
-                document.write(`<a  href="/logout">Logout</a>`);
-            }
-            else{
-                document.write(`<a  href="/login">Login</a>`);
-                document.write(`<a  href="/signup">Sign up</a>`);
-            }
-            document.write(`<a  href="/logout">Admin</a>`);
+                const auth = document.cookie?.split(';')[1]?.split("-")[1];
+                if(auth === "true"){
+                    document.write(`<a  href="/cart">Cart</a>`);
+                    document.write(`<a  href="/logout">Logout</a>`);
+                }
+                else{
+                    document.write(`<a  href="/login">Login</a>`);
+                    document.write(`<a  href="/signup">Sign up</a>`);
+                }
+                document.write(`<a  href="/admin">Admin</a>`);
             </script>
         </nav>
     </nav>
