@@ -1,6 +1,11 @@
 require('dotenv').config();
 const express = require('express');
+const connectToDatabase = require("./database/connection");
 const path = require('path');
+
+
+//Connect to database
+connectToDatabase();
 
 //controllers
 const {signupViewController, signupController} = require("./controller/signupController");
