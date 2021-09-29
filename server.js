@@ -9,6 +9,7 @@ const path = require('path');
 
 //controllers
 const {signupViewController, signupController} = require("./controller/signupController");
+const {loginViewController, loginController} = require("./controller/loginController")
 const {homeController} = require("./controller/viewsController");
 
 const app = express();
@@ -24,6 +25,9 @@ app.get('/', homeController);
 // Authentication Route
 app.get("/signup", signupViewController);
 app.post("/signup", signupController);
+
+app.get('/login', loginViewController);
+app.post("/login", loginController);
 
 app.listen(PORT, () => {
     console.log("Express listening on port " + PORT);
