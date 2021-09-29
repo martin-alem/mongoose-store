@@ -30,6 +30,7 @@ const agent = (function(){
     const email = document.getElementById('email');
     const password = document.getElementById('password');
     const submit = document.getElementById('submit');
+    const form = document.getElementById('signup_form');
 
     submit.addEventListener('click', handleSubmit);
 
@@ -45,12 +46,20 @@ const agent = (function(){
 
     function handleSubmit(event) {
         event.preventDefault();
+
+        //disable submit button
+        submit.setAttribute("disabled", "disabled");
+        submit.textContent = "Please wait...";
+
         if(validateFormFields()){
-            const formDate = {"first_name": firstName, "last_name": lastName, "email": email, "password": password};
+            const formDate = {"first_name": firstName.value, "last_name": lastName.value, "email": email.value, "password": password.value};
             config = {method: 'POST', body: formDate}
             agent.handleRequest("http://localhost:3000/signup", config)
                 .then(response =>{
                     if(response.status){
+                        submit.removeAttribute("disabled");
+                        submit.textContent = "Register";
+                        form.reset();
                         response.json()
                             .then(data => console.log(data));
                     }
@@ -58,9 +67,6 @@ const agent = (function(){
                 .catch(err =>{
                     console.error(err);
                 })
-            //disable submit button
-            submit.setAttribute("disabled", "disabled");
-            submit.textContent = "Please wait...";
         }else{
             alert("Please enter all required fields");
         }
