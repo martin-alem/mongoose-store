@@ -5,7 +5,7 @@ const path = require('path');
 
 
 //Connect to database
-// connectToDatabase();
+connectToDatabase();
 
 //controllers
 const {signupViewController, signupController} = require("./controller/signupController");
