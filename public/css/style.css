@@ -56,3 +56,36 @@ main.signup form input{
     font-weight: bold;
     cursor: pointer;
 }
+
+
+.main-nav{
+    padding: 1rem;
+    background-color: #112031;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.main-nav h1{
+    text-transform: uppercase;
+    color: #FFFFFF;
+    font-size: 3rem;
+}
+
+.main-nav nav{
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    gap: 2rem;
+}
+
+.main-nav nav a{
+    text-decoration: none;
+    color: #FFFFFF;
+    font-size: 2rem;
+}
+
+.main-header{
+    height: 80vh;
+    background-color: red;
+}

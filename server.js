@@ -5,10 +5,11 @@ const path = require('path');
 
 
 //Connect to database
-connectToDatabase();
+// connectToDatabase();
 
 //controllers
 const {signupViewController, signupController} = require("./controller/signupController");
+const {homeController} = require("./controller/viewsController");
 
 const app = express();
 const PORT = parseInt(process.env.PORT) || 8000;
@@ -16,6 +17,9 @@ const PORT = parseInt(process.env.PORT) || 8000;
 app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname, '/public')));
 app.use(express.urlencoded({extended: true}));
+
+//home route
+app.get('/', homeController);
 
 // Authentication Route
 app.get("/signup", signupViewController);

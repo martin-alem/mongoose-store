@@ -17,7 +17,7 @@ async function signupController(req, res){
                         res.redirect("/signup?error=An error has occurred");
                     }else{
                         res.cookie("access_token", hashedCookieValue, {expires: new Date(Date.now() + 1 * 3600000), sameSite: true});
-                        const currentUser = {"authenticated": true, "type": "user", "first_name": data["first_name"], "last_name": data["last_name"]};
+                        const currentUser = {"auth": true, "type": "user", "first_name": data["first_name"], "last_name": data["last_name"]};
                         res.render("index", {currentUser: currentUser});
                     }
                 })

@@ -5,12 +5,33 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home Page</title>
+
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <h1>Home Page</h1>
-    First Name: <%- currentUser["first_name"] %>
-    Last Name: <%- currentUser["last_name"] %>
-    Authenticated: <%- currentUser["authenticated"] %>
-    Type: <%- currentUser["type"]%>
+    <nav class="main-nav">
+        <h1>Bmazon</h1>
+        <nav>
+            <% if (currentUser["type"] === "admin" && currentUser["auth"] === true){ %>
+                <a  href="/add_product">Add Product</a>
+           <% } %>
+           <% if (currentUser["type"] === "user" && currentUser["auth"] === true){ %>
+                <a  href="/cart">Cart</a>
+           <% } %>
+           <% if (currentUser["auth"] === true){ %>
+                <a  href="/logout">Logout</a>
+           <% } %>
+           <% if (currentUser["auth"] === false){ %>
+                <a  href="/login">Login</a>
+                <a  href="/signup">Sign up</a>
+           <% } %>
+        </nav>
+    </nav>
+    <header class="main-header">
+    </header>
+
+    <section class="products">
+        <h1>Featured Products</h1>
+    </section>
 </body>
 </html>
