@@ -1,4 +1,10 @@
-function signupController(req, res){
+const {encryptCookie} = require("../utils/util");
+
+async function signupController(req, res){
+
+    const cookieValue = `${req.body["email"]}-${req.body["password"]}`;
+    const hashedCookieValue = await encryptCookie(cookieValue);
+    res.cookie("access_token", hashedCookieValue, {expires: new Date(Date.now() + 1 * 36000), sameSite: true});
     res.status(201).json({
         "status": "success",
         "statusCode": 201,
