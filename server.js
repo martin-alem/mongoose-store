@@ -1,5 +1,6 @@
 require('dotenv').config();
 const express = require('express');
+const cookieParser = require('cookie-parser')
 const connectToDatabase = require("./database/connection");
 const path = require('path');
 
@@ -12,12 +13,14 @@ const {signupViewController, signupController} = require("./controller/signupCon
 const {loginViewController, loginController, logoutController} = require("./controller/loginController")
 const {homeController} = require("./controller/viewsController");
 const {adminLoginView, adminLoginController, adminDashboardView, adminLogoutController} = require("./controller/adminController");
+const {authorizedAdmin} = require("./auth/adminAuth");
 
 const app = express();
 const PORT = parseInt(process.env.PORT) || 8000;
 
 app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname, '/public')));
+app.use(cookieParser());
 app.use(express.urlencoded({extended: true}));
 
 //home route
@@ -35,8 +38,13 @@ app.get("/logout", logoutController);
 //admin
 app.get('/admin', adminLoginView);
 app.post("/admin", adminLoginController);
-app.get("/admin/dashboard", adminDashboardView);
+app.get("/admin/dashboard", authorizedAdmin, adminDashboardView);
 app.get("/admin/logout", adminLogoutController);
+
+
+app.all("*", (req, res) => {
+    res.status(404).render("error");
+})
 
 app.listen(PORT, () => {
     console.log("Express listening on port " + PORT);
