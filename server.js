@@ -2,6 +2,9 @@ require('dotenv').config();
 const express = require('express');
 const path = require('path');
 
+//controllers
+const {signupViewController} = require("./controller/signupController");
+
 const app = express();
 const PORT = parseInt(process.env.PORT) || 8000;
 
@@ -9,10 +12,8 @@ app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname, '/public')));
 app.use(express.json());
 
-//Routes
-app.get('/', (req, res) => {
-    res.status(200).json({message: "Express app up and running"});
-})
+// Authentication Route
+app.get("/signup", signupViewController);
 
 app.listen(PORT, () => {
     console.log("Express listening on port " + PORT);
