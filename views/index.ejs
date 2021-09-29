@@ -12,19 +12,18 @@
     <nav class="main-nav">
         <h1>Bmazon</h1>
         <nav>
-            <% if (currentUser["type"] === "admin" && currentUser["auth"] === true){ %>
-                <a  href="/Admin">Add Product</a>
-           <% } %>
-           <% if (currentUser["type"] === "user" && currentUser["auth"] === true){ %>
-                <a  href="/cart">Cart</a>
-           <% } %>
-           <% if (currentUser["auth"] === true){ %>
-                <a  href="/logout">Logout</a>
-           <% } %>
-           <% if (currentUser["auth"] === false){ %>
-                <a  href="/login">Login</a>
-                <a  href="/signup">Sign up</a>
-           <% } %>
+            <script>
+            const auth = document.cookie?.split(';')[1]?.split("-")[1];
+            if(auth === "true"){
+                document.write(`<a  href="/cart">Cart</a>`);
+                document.write(`<a  href="/logout">Logout</a>`);
+            }
+            else{
+                document.write(`<a  href="/login">Login</a>`);
+                document.write(`<a  href="/signup">Sign up</a>`);
+            }
+            document.write(`<a  href="/logout">Admin</a>`);
+            </script>
         </nav>
     </nav>
     <header class="main-header">

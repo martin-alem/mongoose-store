@@ -13,8 +13,9 @@ async function loginController(req, res){
                     const cookieValue = JSON.stringify({"EX-email":data.email, "EX-password":data.password, "EX-auth":true});
                     const hashedCookieValue = await encryptCookie(cookieValue);
                     res.cookie("access_token", hashedCookieValue, {expires: new Date(Date.now() + 1 * 3600000), sameSite: true});
-                    const currentUser = {"auth": true, "type": "user", "first_name": data["first_name"], "last_name": data["last_name"]};
-                    res.render("index", {currentUser: currentUser});
+                    const currentUser = `auth-true`;
+                    res.cookie("auth", currentUser, {expires: new Date(Date.now() + 1 * 3600000), sameSite: true});
+                    res.redirect(301, "/");
                 }else{
                     res.redirect("/login?error=Invalid email or password");
                 }
@@ -22,6 +23,7 @@ async function loginController(req, res){
                 res.redirect("/login?error=Invalid email or password");
             }
         }catch(err){
+            console.log(err);
             res.redirect("/error");
         }
     }else{
@@ -42,8 +44,14 @@ function validatePayload(payload) {
 }
 
 
+function logoutController(req, res){
+    res.clearCookie("access_token");
+    res.clearCookie("auth");
+    res.redirect("/");
+}
+
 function loginViewController(req, res){
     res.status(200).render('login');
 }
 
-module.exports = {loginViewController, loginController};
+module.exports = {loginViewController, loginController, logoutController};
