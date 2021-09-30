@@ -45,17 +45,15 @@ app.post("/admin", adminLoginController);
 app.get("/admin/dashboard", authorizeAdmin, adminDashboardView);
 app.get("/admin/logout", adminLogoutController);
 
-app.post("/order/:id", createOrderController);
-
 app.get("/admin/add_product", authorizeAdmin, addProductView);
 app.post("/admin/add_product", authorizeAdmin, addProductController);
-app.get("/product_detail/:id", productDetailController);
+app.delete("/admin/delete_product/:id", authorizeAdmin, deleteProductController);
 
 app.get("/admin/edit_product/:id", authorizeAdmin, editProductView);
 app.put("/admin/edit_product", authorizeAdmin, editProductController);
 
-app.delete("/admin/delete_product/:id", authorizeAdmin, deleteProductController);
-
+app.get("/product_detail/:id", productDetailController);
+app.post("/order/:id", createOrderController);
 
 app.all("*", (req, res) => {
     res.status(404).render("error");
