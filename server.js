@@ -9,11 +9,11 @@ const path = require('path');
 connectToDatabase();
 
 //controllers
-const {signupViewController, signupController} = require("./controller/signupController");
-const {loginViewController, loginController, logoutController} = require("./controller/loginController")
-const {homeController} = require("./controller/viewsController");
-const {adminLoginView, adminLoginController, adminDashboardView, adminLogoutController} = require("./controller/adminController");
-const {authorizedAdmin} = require("./auth/adminAuth");
+const { signupViewController, signupController } = require("./controller/signupController");
+const { loginViewController, loginController, logoutController } = require("./controller/loginController")
+const { homeController } = require("./controller/viewsController");
+const { adminLoginView, adminLoginController, adminDashboardView, adminLogoutController } = require("./controller/adminController");
+const { authorizeAdmin } = require("./auth/adminAuth");
 
 const app = express();
 const PORT = parseInt(process.env.PORT) || 8000;
@@ -21,7 +21,7 @@ const PORT = parseInt(process.env.PORT) || 8000;
 app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname, '/public')));
 app.use(cookieParser());
-app.use(express.urlencoded({extended: true}));
+app.use(express.urlencoded({ extended: true }));
 
 //home route
 app.get('/', homeController);
@@ -38,7 +38,7 @@ app.get("/logout", logoutController);
 //admin
 app.get('/admin', adminLoginView);
 app.post("/admin", adminLoginController);
-app.get("/admin/dashboard", authorizedAdmin, adminDashboardView);
+app.get("/admin/dashboard", authorizeAdmin, adminDashboardView);
 app.get("/admin/logout", adminLogoutController);
 
 

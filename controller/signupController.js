@@ -1,4 +1,4 @@
-const {encryptCookie} = require("../utils/util");
+const {hashData, signCookie} = require("../utils/util");
 const User = require("../model/User");
 
 async function signupController(req, res){

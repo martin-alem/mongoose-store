@@ -1,5 +1,5 @@
 const Admin = require("./../model/Admin");
-const { encryptCookie } = require("../utils/util");
+const { hashData, signCookie } = require("../utils/util");
 
 async function adminLoginController(req, res) {
   const data = req.body;
@@ -17,8 +17,13 @@ async function adminLoginController(req, res) {
             "EX-password": data.password,
             "EX-auth": true,
           });
-          const hashedCookieValue = await encryptCookie(cookieValue);
+          const hashedCookieValue = hashData(cookieValue);
+          const signedCookie = signCookie(hashedCookieValue);
           res.cookie("admin_access_token", hashedCookieValue, {
+            expires: new Date(Date.now() + 0.5 * 3600000),
+            sameSite: true,
+          });
+          res.cookie("admin_auth_token", signedCookie, {
             expires: new Date(Date.now() + 0.5 * 3600000),
             sameSite: true,
           });
@@ -33,12 +38,14 @@ async function adminLoginController(req, res) {
       res.redirect(301, "/admin?error=Provide all required credentials");
     }
   } catch (err) {
-      res.redirect(301, "/error");
+    console.log(err);
+    res.redirect(301, "/error");
   }
 }
 
 function adminLogoutController(req, res) {
   res.clearCookie("admin_access_token");
+  res.clearCookie("admin_auth_token");
   res.redirect("/admin");
 }
 

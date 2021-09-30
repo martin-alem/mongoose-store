@@ -1,28 +1,24 @@
-const Admin = require("./../model/Admin");
-const { decryptCookie } = require("../utils/util");
+const { verifyCookie } = require("../utils/util");
 
-async function authorizedAdmin(req, res, next) {
-    const cookie = req.cookies["admin_access_token"];
-    if(cookie){
-        try{
-            const decryptedCookie = await decryptCookie(cookie);
-            const admin = JSON.parse(decryptedCookie);
-            // I will perform a minimum check to make sure the token has not been tampered with.
-            // We could also check if this user actually exists in the database
-            if(admin["EX-email"] && admin["EX-password"] && admin["EX-auth"]){
-                next();
-            }
-            else{
-                res.redirect("/admin");
-            }
-        }catch(err){
-            console.log(err);
-            res.redirect("/error");
+function authorizeAdmin(req, res, next) {
+    if (Object.keys(req.cookies).length > 0) {
+        let signedCookie = req.cookies["admin_auth_token"]?.["data"] || req.cookies?.["admin_auth_token"] || "";
+        let hashedCookie = req.cookies["admin_access_token"] || "";
+        signedCookie = Buffer.from(signedCookie);
+        hashedCookie = hashedCookie;
+        const authenticated = verifyCookie(hashedCookie, signedCookie);
+
+        if (authenticated) {
+            next();
+        }
+        else {
+            res.redirect(301, "/admin");
         }
     }
-    else{
-        res.redirect("/admin");
+    else {
+        res.redirect(301, "/admin");
     }
+
 }
 
-module.exports = {authorizedAdmin};
+module.exports = { authorizeAdmin };
