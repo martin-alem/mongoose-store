@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        <%- product['productName'] %> | Bmazon
+    </title>
+
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+    <nav class="main-nav">
+        <h1>Bmazon</h1>
+        <nav>
+            <script>
+                const auth = document.cookie?.split(';')[2]?.split("-")[1];
+                document.write(`<a  href="/">Home</a>`);
+                if (auth === "true") {
+                    document.write(`<a  href="/logout">Logout</a>`);
+                }
+                else {
+                    document.write(`<a  href="/login">Login</a>`);
+                    document.write(`<a  href="/signup">Sign up</a>`);
+                }
+            </script>
+        </nav>
+    </nav>
+
+    <section class="details">
+        <img src="<%-product['productImage']%>" alt="<%-product['productName']%>" />
+        <div class="more">
+            <h1>
+                <%- product['productName'] %>
+            </h1>
+            <p>
+                $<%- product['productPrice']%>
+            </p>
+            <p>
+                <%- product['productQty']%> In stock
+            </p>
+            <p>
+                <%- new Date(product['date']).toUTCString()%>
+            </p>
+            <div class="buy">
+                <script>
+                    if (auth === "true") {
+                        document.write(`<form action="/order/<%-product['_id']%>" method="POST"><input type="hidden" name="id" value="<%-product['_id']%>"><input type="hidden" name="qty" value="<%-product['productQty']%>"><button type="submit">Buy</button></form>`);
+                        document.write(` <div class="error"></div>`);
+                    }
+                </script>
+            </div>
+        </div>
+
+    </section>
+    <script src="../js/app.js"></script>
+</body>
+
+</html>

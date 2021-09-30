@@ -12,7 +12,8 @@ connectToDatabase();
 //controllers
 const { signupViewController, signupController } = require("./controller/signupController");
 const { loginViewController, loginController, logoutController } = require("./controller/loginController")
-const { homeController } = require("./controller/viewsController");
+const { homeController, productDetailController } = require("./controller/viewsController");
+const { createOrderController } = require("./controller/orderController");
 const { adminLoginView, adminLoginController, adminDashboardView, adminLogoutController } = require("./controller/adminController");
 const { addProductView, addProductController, editProductView, editProductController, deleteProductController } = require("./controller/productController");
 const { authorizeAdmin } = require("./auth/adminAuth");
@@ -44,10 +45,11 @@ app.post("/admin", adminLoginController);
 app.get("/admin/dashboard", authorizeAdmin, adminDashboardView);
 app.get("/admin/logout", adminLogoutController);
 
+app.post("/order/:id", createOrderController);
 
-//product
 app.get("/admin/add_product", authorizeAdmin, addProductView);
 app.post("/admin/add_product", authorizeAdmin, addProductController);
+app.get("/product_detail/:id", productDetailController);
 
 app.get("/admin/edit_product/:id", authorizeAdmin, editProductView);
 app.put("/admin/edit_product", authorizeAdmin, editProductController);

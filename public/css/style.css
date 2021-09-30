@@ -85,11 +85,27 @@ main.signup form input {
   font-size: 2rem;
 }
 
-.main-header {
-  height: 80vh;
-  background-color: red;
+section.products {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
 }
 
+section.details {
+  width: 30%;
+  margin: 10rem auto;
+  display: flex;
+}
+
+section.details .more h1 {
+  text-transform: uppercase;
+  font-size: 3rem;
+}
+
+section.details .more p {
+  font-size: 2rem;
+}
 .error {
   color: #ff2442;
   font-size: 1.5rem;
@@ -125,7 +141,7 @@ main.products .product .details p {
   font-size: 2rem;
 }
 
-main.products .product .details .action{
-    display: flex;
-    gap: 2rem;
+main.products .product .details .action {
+  display: flex;
+  gap: 2rem;
 }

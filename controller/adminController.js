@@ -60,7 +60,7 @@ async function adminDashboardView(req, res) {
     const products = await Product.find({});
     res.status(200).render("dashboard", { products: products });
   } catch (error) {
-    res.status(500).redirect("/error");
+    res.status(404).redirect("/error");
   }
 }
 
