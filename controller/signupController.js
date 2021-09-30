@@ -10,13 +10,15 @@ async function signupController(req, res){
         
             if(result === null){
                 const cookieValue = JSON.stringify({"EX-email":data.email, "EX-password":data.password, "EX-auth":true});
-                const hashedCookieValue = await encryptCookie(cookieValue);
                 const userData = {firstName: data["first_name"], lastName: data["last_name"], email: data["email"], password: data["password"]};
                 User.create(userData, (error, document) =>{
                     if(error) {
                         res.redirect("/signup?error=An error has occurred");
-                    }else{
-                        res.cookie("access_token", hashedCookieValue, {expires: new Date(Date.now() + 1 * 3600000), sameSite: true});
+                    } else {
+                        const hashedCookieValue = hashData(cookieValue);
+                        const signedCookie = signCookie(hashedCookieValue);
+                        res.cookie("access_token", hashedCookieValue, { expires: new Date(Date.now() + 1 * 3600000), sameSite: true });
+                        res.cookie("auth_token", signedCookie, { expires: new Date(Date.now() + 1 * 3600000), sameSite: true });
                         const currentUser = `auth-true`;
                         res.cookie("auth", currentUser, {expires: new Date(Date.now() + 1 * 3600000), sameSite: true});
                         res.redirect(301, "/");
