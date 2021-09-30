@@ -45,7 +45,7 @@ app.get("/admin/logout", adminLogoutController);
 
 //product
 app.get("/add_product", authorizeAdmin, addProductView);
-app.post("/add_product", addProductController);
+app.post("/add_product", authorizeAdmin, addProductController);
 
 
 app.all("*", (req, res) => {

@@ -11,7 +11,7 @@ const ProductSchema = new mongoose.Schema({
     },
     productImage: {
         type: String,
-        required: false,
+        required: true,
         default: "default.png"
     },
     productQty: {
