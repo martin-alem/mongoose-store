@@ -57,7 +57,7 @@ app.post("/order/:id", createOrderController);
 
 app.all("*", (req, res) => {
     res.status(404).render("error");
-})
+});
 
 app.listen(PORT, () => {
     console.log("Express listening on port " + PORT);
