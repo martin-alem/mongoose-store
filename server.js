@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
-const cookieParser = require('cookie-parser')
+const cookieParser = require('cookie-parser');
+const methodOverride = require("method-override");
 const connectToDatabase = require("./database/connection");
 const path = require('path');
 
@@ -13,12 +14,13 @@ const { signupViewController, signupController } = require("./controller/signupC
 const { loginViewController, loginController, logoutController } = require("./controller/loginController")
 const { homeController } = require("./controller/viewsController");
 const { adminLoginView, adminLoginController, adminDashboardView, adminLogoutController } = require("./controller/adminController");
-const { addProductView, addProductController } = require("./controller/productController");
+const { addProductView, addProductController, editProductView, editProductController } = require("./controller/productController");
 const { authorizeAdmin } = require("./auth/adminAuth");
 
 const app = express();
 const PORT = parseInt(process.env.PORT) || 8000;
 
+app.use(methodOverride('_method'));
 app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname, '/public')));
 app.use(cookieParser());
@@ -44,8 +46,11 @@ app.get("/admin/logout", adminLogoutController);
 
 
 //product
-app.get("/add_product", authorizeAdmin, addProductView);
-app.post("/add_product", authorizeAdmin, addProductController);
+app.get("/admin/add_product", authorizeAdmin, addProductView);
+app.post("/admin/add_product", authorizeAdmin, addProductController);
+
+app.get("/admin/edit_product/:id", authorizeAdmin, editProductView);
+app.put("/admin/edit_product", authorizeAdmin, editProductController);
 
 
 app.all("*", (req, res) => {

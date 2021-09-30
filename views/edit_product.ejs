@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin | Add Product</title>
+
+    <link rel="stylesheet" href="../../css/style.css">
+</head>
+
+<body>
+    <nav class="main-nav">
+        <h1>Admin</h1>
+        <nav>
+            <a href="/admin/dashboard">Dashboard</a>
+            <a href="/admin/logout">Logout</a>
+        </nav>
+    </nav>
+    <main class="signup">
+        <h1>
+            <%-product['productName']%>
+        </h1>
+        <div class="error"></div>
+        <form method="POST" id="edit_form" action="/admin/edit_product?_method=PUT">
+            <input type="hidden" name="id" value="<%-product['_id']%>">
+            <input type="text" name="name" id="name" value="<%-product['productName']%>" placeholder="Product Name">
+            <input type="text" name="price" id="price" value="<%-product['productPrice']%>" placeholder="Product Price">
+            <input type="text" name="image" id="image" value="<%-product['productImage']%>"
+                placeholder="Product Image Url">
+            <input type="text" name="quantity" value="<%-product['productQty']%>" id="quantity"
+                placeholder="Product Quantity">
+            <button type="submit" id="submit" class="btn btn-submit">Edit <%-product['productName']%></button>
+        </form>
+    </main>
+
+    <script src="../../js/app.js"></script>
+</body>
+
+</html>

@@ -7,19 +7,47 @@ function addProductController(req, res) {
         const productData = { productName: data["name"], productPrice: data["price"], productImage: data["image"], productQty: data["quantity"] };
         Product.create(productData, (error, document) => {
             if (error) {
-                res.redirect("/add_product?error=An error has occurred");
+                res.redirect("/admin/add_product?error=An error has occurred");
             } else {
-                res.redirect("/add_product?error=Product added successfully");
+                res.redirect("/admin/add_product?error=Product added successfully");
             }
         });
     }
     else {
-        res.redirect("/add_product?error=Please provide all required fields");
+        res.redirect("/admin/add_product?error=Please provide all required fields");
+    }
+}
+
+function editProductController(req, res) {
+    const data = req.body;
+    const id = req.body["id"];
+    if (validatePayload(data)) {
+        const productData = { productName: data["name"], productPrice: data["price"], productImage: data["image"], productQty: data["quantity"] };
+        Product.findOneAndUpdate({ _id: id }, productData, {new: true},(error, document) => {
+            if (error) {
+                res.redirect(`/admin/edit_product/${id}?error=An error has occurred`);
+            } else {
+                res.redirect(`/admin/edit_product/${id}?error=Product updated successfully`);
+            }
+        })
+    }
+    else {
+        res.redirect("/admin/add_product?error=Please provide all required fields");
     }
 }
 
 function addProductView(req, res) {
     res.status(200).render("add_product");
+}
+
+async function editProductView(req, res) {
+    const id = req.params.id;
+    try {
+        const product = await Product.findOne({ _id: id });
+        res.status(200).render("edit_product", { product: product });
+    } catch (error) {
+        res.redirect("/admin/dashboard");
+    }
 }
 
 function validatePayload(payload) {
@@ -34,4 +62,4 @@ function validatePayload(payload) {
     return false;
 }
 
-module.exports = { addProductView, addProductController };
+module.exports = { addProductView, addProductController, editProductView, editProductController };
