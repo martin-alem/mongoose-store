@@ -13,6 +13,7 @@ const { signupViewController, signupController } = require("./controller/signupC
 const { loginViewController, loginController, logoutController } = require("./controller/loginController")
 const { homeController } = require("./controller/viewsController");
 const { adminLoginView, adminLoginController, adminDashboardView, adminLogoutController } = require("./controller/adminController");
+const { addProductView, addProductController } = require("./controller/productController");
 const { authorizeAdmin } = require("./auth/adminAuth");
 
 const app = express();
@@ -40,6 +41,11 @@ app.get('/admin', adminLoginView);
 app.post("/admin", adminLoginController);
 app.get("/admin/dashboard", authorizeAdmin, adminDashboardView);
 app.get("/admin/logout", adminLogoutController);
+
+
+//product
+app.get("/add_product", authorizeAdmin, addProductView);
+app.post("/add_product", addProductController);
 
 
 app.all("*", (req, res) => {
