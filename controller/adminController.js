@@ -1,4 +1,6 @@
 const Admin = require("./../model/Admin");
+const Product = require("./../model/Product");
+
 const { hashData, signCookie } = require("../utils/util");
 
 async function adminLoginController(req, res) {
@@ -53,8 +55,13 @@ function adminLoginView(req, res) {
   res.status(200).render("admin");
 }
 
-function adminDashboardView(req, res) {
-  res.status(200).render("dashboard");
+async function adminDashboardView(req, res) {
+  try {
+    const products = await Product.find({});
+    res.status(200).render("dashboard", { products: products });
+  } catch (error) {
+    res.status(500).redirect("/error");
+  }
 }
 
 module.exports = {

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,13 +9,39 @@
 
     <link rel="stylesheet" href="../css/style.css">
 </head>
+
 <body>
     <nav class="main-nav">
         <h1>Admin</h1>
         <nav>
-            <a  href="/add_product">Add Product</a>
-            <a  href="/admin/logout">Logout</a>
+            <a href="/add_product">Add Product</a>
+            <a href="/admin/logout">Logout</a>
         </nav>
     </nav>
+    <main class="products">
+        <% for(const product of products) { %>
+            <div class="product">
+                <img src="<%-product['productImage']%>" alt="<%-product['productName']%>" />
+                <div class="details">
+                    <h1>
+                        <%-product['productName']%>
+                    </h1>
+                    <p>$<%-product['productPrice']%>
+                    </p>
+                    <p>
+                        <%-product['productQty']%> In stock
+                    </p>
+                    <div class="action">
+                        <a href="/admin/edit"><button>Edit</button></a>
+                        <form action="/admin/delete?_method=DELETE" method="POST">
+                            <button type="submit">Delete</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <%}%>
+
+    </main>
 </body>
+
 </html>
