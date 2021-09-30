@@ -23,7 +23,7 @@ function editProductController(req, res) {
     const id = req.body["id"];
     if (validatePayload(data)) {
         const productData = { productName: data["name"], productPrice: data["price"], productImage: data["image"], productQty: data["quantity"] };
-        Product.findOneAndUpdate({ _id: id }, productData, {new: true},(error, document) => {
+        Product.findOneAndUpdate({ _id: id }, productData, { new: true }, (error, document) => {
             if (error) {
                 res.redirect(`/admin/edit_product/${id}?error=An error has occurred`);
             } else {
@@ -34,6 +34,18 @@ function editProductController(req, res) {
     else {
         res.redirect("/admin/add_product?error=Please provide all required fields");
     }
+}
+
+function deleteProductController(req, res) {
+    const id = req.params.id;
+    Product.findOneAndDelete({ _id: id }, { new: true }, (error, document) => {
+        if (error) {
+            console.log(error)
+            res.redirect(`/admin/dashboard`);
+        } else {
+            res.redirect(`/admin/dashboard`);
+        }
+    })
 }
 
 function addProductView(req, res) {
@@ -62,4 +74,4 @@ function validatePayload(payload) {
     return false;
 }
 
-module.exports = { addProductView, addProductController, editProductView, editProductController };
+module.exports = { addProductView, addProductController, editProductView, editProductController, deleteProductController };

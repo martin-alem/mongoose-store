@@ -14,7 +14,7 @@ const { signupViewController, signupController } = require("./controller/signupC
 const { loginViewController, loginController, logoutController } = require("./controller/loginController")
 const { homeController } = require("./controller/viewsController");
 const { adminLoginView, adminLoginController, adminDashboardView, adminLogoutController } = require("./controller/adminController");
-const { addProductView, addProductController, editProductView, editProductController } = require("./controller/productController");
+const { addProductView, addProductController, editProductView, editProductController, deleteProductController } = require("./controller/productController");
 const { authorizeAdmin } = require("./auth/adminAuth");
 
 const app = express();
@@ -51,6 +51,8 @@ app.post("/admin/add_product", authorizeAdmin, addProductController);
 
 app.get("/admin/edit_product/:id", authorizeAdmin, editProductView);
 app.put("/admin/edit_product", authorizeAdmin, editProductController);
+
+app.delete("/admin/delete_product/:id", authorizeAdmin, deleteProductController);
 
 
 app.all("*", (req, res) => {
